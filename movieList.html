@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Lina의 영화</title>
+  </head>
+
+  <style>
+    body {
+      margin: 20px;
+      padding: 20px;
+    }
+    .card {
+      width: 600px;
+      height: 240px;
+      border: 1px solid black;
+      position: relative;
+      display: block;
+      flex-direction: column;
+    }
+    .card-img {
+      position: relative;
+      left: 15px;
+      top: -260px;
+      width: 180px;
+      height: 45px;
+    }
+    img {
+      box-shadow: 5px 5px 7px gray;
+    }
+    .card-head {
+      padding-left: 210px;
+      margin: 0px;
+      align-items: flex-start;
+    }
+    .card-summary {
+      padding-left: 210px;
+      margin: 0px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+    }
+
+    li {
+      /* width: 600px;
+      height: 240px; */
+      padding: 20px;
+      float: left;
+      list-style: none;
+    }
+    .form {
+      margin: 0px;
+    }
+  </style>
+  <body>
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.js"
+      integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $.ajax({
+          method: "get",
+          url: "https://yts.mx/api/v2/list_movies.json?quality=3D",
+          success: function (data) {
+            let addListHtml = "";
+            for (let i = 0; i < data.data.movies.length; i++) {
+              addListHtml += "<li style='list-style: none'>";
+              addListHtml +=
+                "<div class='card'><div class='card-head'><h3>" +
+                data.data.movies[i].title +
+                "</h3></div>";
+              addListHtml +=
+                "<div class='card-summary'><p>" +
+                data.data.movies[i].summary +
+                "</p></div></div>";
+              addListHtml +=
+                "<div class='card-img'><img src='" +
+                data.data.movies[i].medium_cover_image +
+                "' width='180px' height='245px'></div></li>";
+            }
+            $("#list").append(addListHtml);
+          },
+        });
+      });
+    </script>
+    <div class="form">
+      <ul>
+        <div id="list">
+          <!-- <div class="card">
+            <div class="card-head"></div>
+            <div class="card-summary"></div>
+          </div>
+          <div class="card-img"></div>
+        </li> -->
+        </div>
+      </ul>
+    </div>
+  </body>
+</html>
